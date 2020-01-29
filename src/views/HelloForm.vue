@@ -5,7 +5,7 @@
         </p>
         <p>
             <label>Name</label>
-            <input v-model="name"
+            <input v-model.trim="name"
                    type="text"
                    placeholder="e.g. John">
         </p>
@@ -14,6 +14,12 @@
             <input v-model="surname"
                    type="text"
                    placeholder="e.g. Doe">
+        </p>
+        <p>
+            <label>Job</label>
+            <select>
+                <option v-for="(option, id) in job" :key="id">{{ option }}</option>
+            </select>
         </p>
         <p>
             <button @click.prevent="clearForm">Clear</button>
@@ -26,7 +32,8 @@
         name: 'HelloForm',
         data: () => ({
             name: 'John',
-            surname: 'Doe'
+            surname: 'Doe',
+            job: ['Job1', 'Job2']
         }),
         methods: {
             clearForm() {
@@ -38,6 +45,9 @@
             isFormFilled() {
                 return this.name && this.surname;
             }
+        },
+        created() {
+            console.log(this.$router);
         }
     }
 </script>
@@ -58,7 +68,7 @@
 
     input,
     button {
-        padding: 10px 20px;
+        padding: 10px 2px;
         font-size: inherit;
     }
 </style>
