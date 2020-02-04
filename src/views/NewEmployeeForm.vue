@@ -1,5 +1,6 @@
 <template>
     <form>
+        <h3>{{ formTitleToUppercase }}</h3>
         <p class="message" v-if="!isFormFilled">
             Please fill Name and Surname
         </p>
@@ -16,9 +17,9 @@
                    placeholder="e.g. Doe">
         </p>
         <p>
-            <label>Job</label>
+            <label>Position</label>
             <select>
-                <option v-for="(option, id) in job" :key="id">{{ option }}</option>
+                <option v-for="(option, id) in developerPositionOptions" :key="id">{{ option }}</option>
             </select>
         </p>
         <p>
@@ -33,7 +34,17 @@
         data: () => ({
             name: 'John',
             surname: 'Doe',
-            job: ['Job1', 'Job2']
+            formTitle: 'This is form title as uppercase',
+            positionOptions: [
+                'Frontend developer',
+                'Backend developer',
+                'DevOps',
+                'Solution architect',
+                'QA engineer',
+                'Business analytics',
+                'UX designer',
+                'Project manager',
+            ],
         }),
         methods: {
             clearForm() {
@@ -44,10 +55,13 @@
         computed: {
             isFormFilled() {
                 return this.name && this.surname;
+            },
+            formTitleToUppercase() {
+                return this.formTitle.toUpperCase();
+            },
+            developerPositionOptions() {
+                return this.positionOptions.filter(option => option.includes('developer'));
             }
-        },
-        created() {
-            console.log(this.$router);
         }
     }
 </script>
@@ -67,8 +81,9 @@
     }
 
     input,
-    button {
-        padding: 10px 2px;
+    button,
+    select {
+        padding: 10px 10px;
         font-size: inherit;
     }
 </style>

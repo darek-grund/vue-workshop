@@ -1,13 +1,28 @@
 <template>
     <div class="nav">
-        <router-link to="/">Home</router-link>
-        <router-link to="/employee">Employee form</router-link>
+        <router-link v-for="(link, key) in links"
+                     :key="key"
+                     :to="link.path"
+        >{{ link.name }}</router-link>
     </div>
 </template>
 
 <script>
     export default {
-        name: "MyNavbar"
+        name: "MyNavbar",
+
+        data: () => ({
+            links: [
+                {
+                    path: '/',
+                    name: 'Home Page',
+                },
+                {
+                    path: '/employee',
+                    name: 'Employee Form',
+                }
+            ]
+        })
     }
 </script>
 
