@@ -1,6 +1,11 @@
 <template>
     <form>
-        <h3>{{ formTitleToUppercase }}</h3>
+        <h3>
+            <my-label :text="formTitle"
+                      :count="clickCount"
+                      @click="handleClick"
+            />
+        </h3>
         <p class="message" v-if="!isFormFilled">
             Please fill Name and Surname
         </p>
@@ -23,18 +28,33 @@
             </select>
         </p>
         <p>
-            <button @click.prevent="clearForm">Clear</button>
+            <clear-button @doClear="clearForm" />
+            <my-button-functional
+                    label="Functional Zapisz"
+                    :disabled="!isFormFilled"
+                    class="button-uppercase"
+                    :class="{ 'button-disabled': !isFormFilled }" />
         </p>
     </form>
 </template>
 
 <script>
+    import MyButtonFunctional from "@/components/MyButtonFunctional";
+    import ClearButton from "@/components/ClearButton";
+    import MyLabel from "@/components/MyLabel";
+
     export default {
         name: 'HelloForm',
+        components: {
+            MyButtonFunctional,
+            ClearButton,
+            MyLabel
+        },
         data: () => ({
             name: 'John',
             surname: 'Doe',
-            formTitle: 'This is form title as uppercase',
+            formTitle: 'Jakiś tytuł formularza',
+            clickCount: 0,
             positionOptions: [
                 'Frontend developer',
                 'Backend developer',
@@ -50,6 +70,10 @@
             clearForm() {
                 this.name = '';
                 this.surname = '';
+            },
+            handleClick(text) {
+                this.formTitle = text.split('').reverse().join('');
+                this.clickCount += 1;
             }
         },
         computed: {
